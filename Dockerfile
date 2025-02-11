@@ -4,10 +4,10 @@
 FROM jlesage/baseimage-gui:alpine-3.12-glibc
 
 # Define software versions.
-ARG TMM_VERSION=5.0
+ARG TMM_VERSION=5.1.1
 
 # Define software download URLs.
-ARG TMM_URL=https://release.tinymediamanager.org/v5/dist/tinyMediaManager-${TMM_VERSION}-linux-amd64.tar.xz
+ARG TMM_URL=https://archive.tinymediamanager.org/v${TMM_VERSION}/tinyMediaManager-${TMM_VERSION}-linux-amd64.tar.xz
 ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/jre/bin
 
 # Define working directory.
@@ -49,15 +49,6 @@ RUN wget "https://www.archlinux.org/packages/core/x86_64/zlib/download" -O /tmp/
 RUN \
     APP_ICON_URL=https://gitlab.com/tinyMediaManager/tinyMediaManager/raw/45f9c702615a55725a508523b0524166b188ff75/AppBundler/tmm.png && \
     install_app_icon.sh "$APP_ICON_URL"
-
-
-# Install Chinese fonts
-RUN wget -O /tmp/font.tar.gz http://downloads.sourceforge.net/wqy/wqy-zenhei-0.9.45.tar.gz && \
-    tar -xzvf /tmp/font.tar.gz -C /tmp/ && \
-    mkdir -p /usr/share/fonts/truetype/wqy && \
-    cp /tmp/wqy-zenhei/wqy-zenhei.ttc /usr/share/fonts/truetype/wqy/ && \
-    fc-cache -f -v && \
-    rm -rf /tmp/font.tar.gz /tmp/wqy-zenhei
 
 # Add files.
 COPY rootfs/ /
